@@ -1,0 +1,28 @@
+.group
+  =f.label :name
+  =f.error_message_on :name
+  =f.text_field :name, :class => :text_field
+  %span.description Ex: a simple text
+
+.group
+  =f.label :tweet_id
+  =f.error_message_on :tweet_id
+  =f.text_field :tweet_id, :class => :text_field
+  %span.description Ex: a simple text
+
+.group
+  =f.label :tweet
+  =f.error_message_on :tweet
+  =f.text_field :tweet, :class => :text_field
+  %span.description Ex: a simple text
+
+.group
+  =f.label :tweeted_at
+  =f.error_message_on :tweeted_at
+  =f.text_field :tweeted_at, :class => :text_field
+  %span.description Ex: a simple text
+
+
+.group.navform.wat-cf
+  =f.submit pat(:save), :class => :button
+  =f.submit pat(:cancel), :onclick => "window.location='#{url(:apples, :index)}';return false", :class => :button

@@ -1,0 +1,10 @@
+.group
+  =f.label :last_searched_id
+  =f.error_message_on :last_searched_id
+  =f.text_field :last_searched_id, :class => :text_field
+  %span.description Ex: a simple text
+
+
+.group.navform.wat-cf
+  =f.submit pat(:save), :class => :button
+  =f.submit pat(:cancel), :onclick => "window.location='#{url(:tweets, :index)}';return false", :class => :button

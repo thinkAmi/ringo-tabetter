@@ -1,0 +1,15 @@
+.block
+  .secondary-navigation
+    %ul.wat-cf
+      %li.first=link_to pat(:list), url(:tweets, :index)
+      %li=link_to pat(:new), url(:tweets, :new)
+      %li.active=link_to pat(:edit), url(:tweets, :edit, :id => @tweet.id)
+  .content
+    %h2.title
+      =pat(:edit)
+      =mt(:tweet)
+    .inner
+      -form_for :tweet, url(:tweets, :update, :id => @tweet.id), :method => :put, :class => :form do |f|
+        =partial "tweets/form", :locals => { :f => f }
+
+-content_for :sidebar, partial("base/sidebar")

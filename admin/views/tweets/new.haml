@@ -1,0 +1,14 @@
+.block
+  .secondary-navigation
+    %ul.wat-cf
+      %li.first=link_to pat(:list), url(:tweets, :index)
+      %li.active=link_to pat(:new), url(:tweets, :new)
+  .content
+    %h2.title
+      =pat(:new)
+      =mt(:tweet)
+    .inner
+      -form_for :tweet, url(:tweets, :create), :class => :form do |f|
+        =partial "tweets/form", :locals => { :f => f }
+
+-content_for :sidebar, partial("base/sidebar")
