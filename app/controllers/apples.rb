@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 RingoTabeta.controllers :apples do
   # get :index, :map => "/foo/bar" do
   #   session[:foo] = "bar"
@@ -22,19 +23,22 @@ RingoTabeta.controllers :apples do
     render "apples/index"
   end
 
-  get :api, provides: :json, map: "/api" do
 
+  get :api, provides: :json, map: "/api" do
     tweets = Apple.count_apple
-    # logger.info(tweets.to_json)
 
     add_color(tweets).to_json
   end
 
+
   get :delete, map: "/delete" do
-    unless ENV["PADRINO_ENV"] == :productoin
-      Apple.delete_all
-      Tweet.delete_all
-    end
+    return "Can not Delete" unless ENV["PADRINO_ENV"] == "development"
+
+    Apple.delete_all
+    Tweet.delete_all
+
+    logger.info("Delete All")
+    "Delete All !!"
   end
 
 end

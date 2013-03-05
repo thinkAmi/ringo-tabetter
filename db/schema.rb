@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 5) do
+ActiveRecord::Schema.define(:version => 7) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -25,17 +25,17 @@ ActiveRecord::Schema.define(:version => 5) do
 
   create_table "apples", :force => true do |t|
     t.string   "name"
-    t.integer  "tweet_id"
-    t.datetime "created_at", :null => false
+    t.integer  "tweet_id",   :limit => 8
+    t.datetime "created_at",              :null => false
     t.string   "tweet"
-    t.datetime "updated_at", :null => false
+    t.datetime "updated_at",              :null => false
     t.datetime "tweeted_at"
   end
 
   create_table "tweets", :force => true do |t|
-    t.integer  "last_searched_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.integer  "last_searched_id", :limit => 8
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
 end

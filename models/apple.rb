@@ -5,5 +5,4 @@ class Apple < ActiveRecord::Base
     .group('name')
     .order('amount DESC')
 
-
 end

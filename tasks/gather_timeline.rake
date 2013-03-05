@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 require 'twitter'
+require 'active_support/all'
 
 task :gather_timeline do
   keys, client, apples = get_run_info
@@ -7,7 +8,7 @@ task :gather_timeline do
   tweet = Tweet.first
   searched_id = tweet.last_searched_id
 
-  timeline = client.user_timeline(keys["TARGET_TIMELINE_USER"], count: 200, since_id: searched_id)
+  timeline = client.user_timeline(keys[:target_timeline_user], count: 200, since_id: searched_id)
 
   next if timeline.size == 0
 
@@ -34,13 +35,13 @@ end
 
 def get_twitter_client(keys)
   Twitter.configure do |config|
-    config.consumer_key = keys["TWITTER_CONSUMER_KEY"]
-    config.consumer_secret = keys["TWITTER_CONSUMER_SECRET"]
+    config.consumer_key = keys[:twitter_consumer_key]
+    config.consumer_secret = keys[:twitter_consumer_secret]
   end
 
   client = Twitter::Client.new(
-    oauth_token: keys["TWITTER_OAUTH_TOKEN"],
-    oauth_token_secret: keys["TWITTER_OAUTH_TOKEN_SECRET"]
+    oauth_token: keys[:twitter_oauth_token],
+    oauth_token_secret: keys[:twitter_oauth_token_secret]
   )
 
   client
@@ -48,16 +49,18 @@ end
 
 
 def get_twitter_api_keys
-  if ENV["PADRINO_ENV"] == :production
+
+  if ENV["PADRINO_ENV"] == "production"
     keys = {
-      TARGET_TIMELINE_USER: ENV["TARGET_TIMELINE_USER"],
-      TWITTER_CONSUMER_KEY: ENV["TWITTER_CONSUMER_KEY"],
-      TWITTER_CONSUMER_SECRET: ENV["TWITTER_CONSUMER_SECRET"],
-      TWITTER_OAUTH_TOKEN: ENV["TWITTER_OAUTH_TOKEN"],
-      TWITTER_OAUTH_TOKEN_SECRET: ENV["TWITTER_OAUTH_TOKEN_SECRET"]
+      target_timeline_user: ENV["TARGET_TIMELINE_USER"],
+      twitter_consumer_key: ENV["TWITTER_CONSUMER_KEY"],
+      twitter_consumer_secret: ENV["TWITTER_CONSUMER_SECRET"],
+      twitter_oauth_token: ENV["TWITTER_OAUTH_TOKEN"],
+      twitter_oauth_token_secret: ENV["TWITTER_OAUTH_TOKEN_SECRET"]
     }
+
   else
-    YAML.load_file("api_key.yaml")
+    HashWithIndifferentAccess.new(YAML.load_file("api_key.yaml"))
   end
 end
 

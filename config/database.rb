@@ -20,7 +20,7 @@ ActiveRecord::Base.configurations[:development] = {
 }
 
 
-# Change for PostgreSQL
+# Heroku PostgreSQL
 require 'active_record'
 require 'uri'
 db = URI.parse(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')

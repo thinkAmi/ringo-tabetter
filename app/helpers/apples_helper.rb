@@ -12,6 +12,7 @@ RingoTabeta.helpers do
 
     apples.each do |apple|
       apple.dummy_for_color = colors.fetch(apple.name)
+      apple.amount = apple.amount.to_i
     end
 
     apples

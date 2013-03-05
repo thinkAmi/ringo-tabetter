@@ -9,12 +9,12 @@ Highcharts.setOptions({
 $(function () {
   var chart = new Highcharts.Chart({
     chart: {
-      renderTo: "container",
-      defaultSeriesType: "pie",
+      renderTo: 'container',
+      defaultSeriesType: 'pie',
     },
 
     title: {
-      text: "食べたリンゴの割合"
+      text: '食べたリンゴたち'
     },
 
     tooltip: {
@@ -44,6 +44,7 @@ $(function () {
       ]
     }]
   });
+
 
   $.getJSON('/api', function(res){
     $.each(res, function(i, json){

@@ -9,13 +9,10 @@ require 'twitter'
 #   shell.say name
 #
 
-if ENV["PADRINO_ENV"] == :production
-  email = "hoge@example.com"
-  password = "fuga"
-else
-  email     = shell.ask "Which email do you want use for logging into admin?"
-  password  = shell.ask "Tell me the password to use:"
-end
+
+email     = shell.ask "Which email do you want use for logging into admin?"
+password  = shell.ask "Tell me the password to use:"
+
 
 shell.say ""
 
@@ -38,11 +35,11 @@ shell.say ""
 
 
 # Apple
+# Twitterは最大2,000ツイート分検索する
+# (TwitterAPI ver1.1や、検索上限3,200ツイートも考慮)
 keys, client, apples = get_run_info
 
-
-
-timeline = client.user_timeline(keys["TARGET_TIMELINE_USER"], count: 200)
+timeline = client.user_timeline(keys[:target_timeline_user], count: 200)
 
 since_id = timeline.first.id
 max_id = 0
@@ -53,13 +50,13 @@ timeline.each do |response|
   max_id = response.id
 end
 
-2.step(3, 1){ |i|
+
+# Twitter Gemで、引数のmax_idが変化しなくなったら、Twitterでの検索をやめる
+2.step(9, 1){ |i|
   last_max_id = max_id
 
-  timeline = client.user_timeline(keys["TARGET_TIMELINE_USER"], count: 200, max_id: max_id)
-
-  timeline.each do |response|
-    unless max_id = response.id
+  client.user_timeline(keys[:target_timeline_user], count: 200, max_id: max_id).each do |response|
+    unless max_id == response.id
       update_apple(apples, response)
 
       max_id = response.id
