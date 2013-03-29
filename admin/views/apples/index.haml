@@ -1,37 +1,60 @@
-.block
-  .secondary-navigation
-    %ul.wat-cf
-      %li.first.active=link_to pat(:list), url(:apples, :index)
-      %li=link_to pat(:new), url(:apples, :new)
-  .content
-    %h2.title
-      =pat(:all)
-      =mt(:apples)
-    .inner
-      %table.table
-        %tr
-          %th.first=mat(:apple, :id)
-          %th=mat(:apple, :name)
-          %th=mat(:apple, :tweet_id)
-          %th=mat(:apple, :created_at)
-          %th=mat(:apple, :tweet)
-          %th=mat(:apple, :updated_at)
-          %th=mat(:apple, :tweeted_at)
-          %th.last="&nbsp;"
-        -@apples.each do |apple|
-          %tr
-            %td.first=apple.id
-            %td=apple.name
-            %td=apple.tweet_id
-            %td=apple.created_at
-            %td=apple.tweet
-            %td=apple.updated_at
-            %td=apple.tweeted_at
-            %td.last
-              =button_to pat(:edit), url(:apples, :edit, :id => apple.id), :method => :get, :class => :button_to
-              ="|"
-              =button_to pat(:delete), url(:apples, :destroy, :id => apple.id), :method => :delete, :class => :button_to, :onsubmit => "return confirm('#{pat(:confirm)}')"
-      .actions-bar.wat-cf
-        .actions="&nbsp;"
+%ul.nav.nav-tabs
+  %li.active=link_to tag_icon(:list, pat(:list)), url(:apples, :index)
+  %li=link_to tag_icon(:plus, pat(:new)), url(:apples, :new)
 
--content_for :sidebar, partial("base/sidebar")
+.tabs-content
+  %table#list.table.table-striped.table-hover.table-condensed
+    %thead
+      %tr
+        %th.header.list-menu
+          .dropdown
+            %a.list-menu-toggle.dropdown-toggle{:href => '#', :'data-toggle' => :dropdown}
+              =tag_icon :magic
+              %span.caret
+            %ul.list-menu.dropdown-menu{:role => :menu}
+              %li.list-menu-wrapper=link_to tag_icon(:check, pat(:select_all)), '#', :id => 'select-all', :class => 'list-menu-link'
+              %li.list-menu-wrapper.list-menu-wrapper-disabled
+                =link_to tag_icon(:'check-empty', pat(:deselect_all)), '#', :id => 'deselect-all', :class => 'list-menu-link list-menu-link-disabled'
+              %li.list-menu-divider.divider
+              %li.list-menu-wrapper.list-menu-wrapper-disabled
+                =link_to tag_icon(:trash, pat(:delete_selected)), '#', :id => 'delete-selected', :class => 'list-menu-link list-menu-link-disabled'
+                .list-menu-popover-delete-selected.popover.right
+                  .arrow
+                  %h3.popover-title=pat(:delete_selected_title)
+                  .popover-content
+                    -form_tag url(:apples, :destroy_many), :method => :delete do
+                      =hidden_field_tag :apple_ids, :'data-delete-many-ids' => true
+                      =submit_tag pat(:delete), :class =>'list-menu-popover-delete-selected-btn btn btn-danger btn-small'
+                      .btn.btn-small.cancel=pat(:cancel)
+        %th.header= :id
+        %th.header= :name
+        %th.header= :tweet_id
+        %th.header= :created_at
+        %th.header= :tweet
+        %th.header= :updated_at
+        %th.header= :tweeted_at
+        %th.header.list-row-action-header
+
+    %tbody
+      -@apples.each do |apple|
+        %tr.list-row
+          %td.list-column.list-selectable
+            =check_box_tag 'apple_ids[]', :value => apple.id, :class => 'list-selectable-checkbox'
+          %td.list-column=apple.id
+          %td.list-column=apple.name
+          %td.list-column=apple.tweet_id
+          %td.list-column=time_ago_in_words apple.created_at
+          %td.list-column=apple.tweet
+          %td.list-column=time_ago_in_words apple.updated_at
+          %td.list-column=apple.tweeted_at
+          %td.list-column.list-row-action
+            .list-row-action-wrapper
+              =link_to tag_icon(:edit), :href => url(:apples, :edit, :id => apple.id), :rel => :tooltip, :title => "#{pat(:edit)} apple", :class => 'list-row-action-wrapper-link'
+              =link_to tag_icon(:trash), :rel => :tooltip, :title => "#{pat(:delete)} apple", :class => 'list-row-action-delete-one list-row-action-wrapper-link'
+              .popover.list-row-action-popover-delete-one.left
+                .arrow
+                %h3.popover-title=pat(:delete, :model => "apple")
+                .popover-content
+                  -form_tag url(:apples, :destroy, :id => apple.id), :method => :delete do
+                    =submit_tag pat(:delete), :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small'
+                    .btn.btn-small.cancel=pat(:cancel)

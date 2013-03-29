@@ -13,10 +13,20 @@
 #     :socket    => '/tmp/mysql.sock'
 #   }
 #
-ActiveRecord::Base.configurations[:development] = {
-  :adapter => 'sqlite3',
-  :database => Padrino.root('db', 'ringo_tabeta_development.db')
+# ActiveRecord::Base.configurations[:development] = {
+#   :adapter => 'sqlite3',
+#   :database => Padrino.root('db', 'ringo_tabeta_development.db')
 
+# }
+
+ActiveRecord::Base.configurations[:development] = {
+  :adapter  => 'postgresql',
+  :host     => 'localhost',
+  :port     => 5432,
+  :username => 'postgres',
+  :password => 'fuga',
+  :database => 'herokudev',
+  :encoding => 'utf8'
 }
 
 

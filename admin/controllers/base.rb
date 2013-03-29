@@ -1,5 +1,4 @@
-Admin.controllers :base do
-
+RingoTabeta::Admin.controllers :base do
   get :index, :map => "/" do
     render "base/index"
   end

@@ -31,6 +31,6 @@ Padrino.configure_apps do
 end
 
 # Mounts the core application for this project
-Padrino.mount("RingoTabeta").to('/')
+Padrino.mount('RingoTabeta::App', :app_file => Padrino.root('app/app.rb')).to('/')
 
-Padrino.mount("Admin").to("/admin")
+Padrino.mount("RingoTabeta::Admin", :app_file => File.expand_path('../../admin/app.rb', __FILE__)).to("/admin")

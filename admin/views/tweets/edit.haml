@@ -1,15 +1,8 @@
-.block
-  .secondary-navigation
-    %ul.wat-cf
-      %li.first=link_to pat(:list), url(:tweets, :index)
-      %li=link_to pat(:new), url(:tweets, :new)
-      %li.active=link_to pat(:edit), url(:tweets, :edit, :id => @tweet.id)
-  .content
-    %h2.title
-      =pat(:edit)
-      =mt(:tweet)
-    .inner
-      -form_for :tweet, url(:tweets, :update, :id => @tweet.id), :method => :put, :class => :form do |f|
-        =partial "tweets/form", :locals => { :f => f }
+%ul.nav.nav-tabs
+  %li=link_to tag_icon(:list, pat(:list)), url(:tweets, :index)
+  %li=link_to tag_icon(:plus, pat(:new)), url(:tweets, :new)
+  %li.active=link_to tag_icon(:edit, pat(:edit)), url(:tweets, :edit, :id => @tweet.id)
 
--content_for :sidebar, partial("base/sidebar")
+.tabs-content
+  -form_for :tweet, url(:tweets, :update, :id => @tweet.id), :method => :put, :class => 'form-horizontal' do |f|
+    =partial 'tweets/form', :locals => { :f => f }

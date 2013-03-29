@@ -9,6 +9,7 @@ gem 'rake'
 gem 'sinatra-flash', :require => 'sinatra/flash'
 
 # Component requirements
+gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'bcrypt-ruby', :require => "bcrypt"
 gem 'sass'
 gem 'haml'
@@ -20,7 +21,8 @@ group :production do
 end
 
 group :development do
-  gem 'sqlite3'
+#  gem 'sqlite3'
+  gem 'pg'
 end
 
 # Test requirements
