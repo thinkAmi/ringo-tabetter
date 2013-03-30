@@ -20,14 +20,30 @@ RingoTabeta::App.controllers :apples do
   # end
 
   get :index, map: "/" do
+    @highchart_path = "/javascripts/total.js"
+    @home_active = "active"
     render "apples/index"
   end
 
 
-  get :api, provides: :json, map: "/api" do
+  get :month, map: "/month" do
+    @highchart_path = "/javascripts/month.js"
+    @month_active = "active"
+    render "apples/month"
+  end
+
+
+  get :api, provides: :json, map: "/api/total" do
     tweets = Apple.count_apple
 
     add_color(tweets).to_json
+  end
+
+
+  get :api_month, provides: :json, map: "/api/month" do
+    tweets = Apple.count_apple_monthly
+
+    collect_by_name(tweets).to_json
   end
 
 

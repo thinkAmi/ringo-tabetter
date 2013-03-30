@@ -46,12 +46,12 @@ $(function () {
   });
 
 
-  $.getJSON('/api', function(res){
+  $.getJSON('/api/total', function(res){
     $.each(res, function(i, json){
       chart.series[0].addPoint({
         name: json['name'],
         y: json['amount'],
-        color: json['dummy_for_color']
+        color: json['color']
       });
     });
   });

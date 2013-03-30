@@ -34,6 +34,8 @@ Bundler.require(:default, PADRINO_ENV)
 # Add your before (RE)load hooks here
 #
 Padrino.before_load do
+  Encoding.default_internal = nil
+  Encoding.default_external = 'UTF-8'
 end
 
 ##
