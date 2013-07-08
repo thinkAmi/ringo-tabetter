@@ -10,7 +10,7 @@ Twitterにて、"[リンゴ]"タグ付きでつぶやいたリンゴ名を、集
 
 * Ubuntu 12.04 (Windows7上のVirtualBox内で動作)
 * Ruby 1.9.3
-* Padrino 0.11.0
+* Padrino 0.11.2
 * PostgreSQL 9.1.8
 
 

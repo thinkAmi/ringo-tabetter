@@ -1,4 +1,5 @@
-source :rubygems
+source "https://rubygems.org"
+ruby "1.9.3"
 
 # Server requirements
 # gem 'thin' # or mongrel
@@ -13,7 +14,7 @@ gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'bcrypt-ruby', :require => "bcrypt"
 gem 'sass'
 gem 'haml'
-gem 'activerecord', :require => "active_record"
+gem 'activerecord', "3.2.13", :require => "active_record"
 
 
 group :production do
@@ -21,7 +22,6 @@ group :production do
 end
 
 group :development do
-#  gem 'sqlite3'
   gem 'pg'
 end
 
@@ -30,8 +30,7 @@ gem 'rspec', :group => "test"
 gem 'rack-test', :require => "rack/test", :group => "test"
 
 # Padrino Stable Gem
-gem 'padrino', '~>0.11.0'
-
+gem 'padrino', "0.11.2"
 
 gem 'twitter'
 

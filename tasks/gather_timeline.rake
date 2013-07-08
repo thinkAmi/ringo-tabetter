@@ -2,7 +2,8 @@
 require 'twitter'
 require 'active_support/all'
 
-task :gather_timeline do
+
+task gather_timeline: :environment do
   keys, client, apples = get_run_info
 
   tweet = Tweet.first
