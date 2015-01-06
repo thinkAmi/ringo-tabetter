@@ -47,6 +47,29 @@ RingoTabeta::App.controllers :apples do
   end
 
 
+  get :api, provides: :js, map: "/api/jsonp/total" do
+    # see http://snippets.aktagon.com/snippets/445-how-to-create-a-jsonp-cross-domain-webservice-with-sinatra-and-ruby
+    tweets = Apple.count_apple
+    jsonp = add_color(tweets).to_json
+
+    callback = params.delete('callback') # jsonp
+    return unless callback
+
+    response = "#{callback}(#{jsonp})"
+  end
+
+
+  get :api_month, provides: :js, map: "/api/jsonp/month" do
+    tweets = Apple.count_apple_monthly
+    jsonp = collect_by_name(tweets).to_json
+
+    callback = params.delete('callback') # jsonp
+    return unless callback
+
+    response = "#{callback}(#{jsonp})"
+  end
+
+
   get :delete, map: "/delete" do
     return "Can not Delete" unless ENV["PADRINO_ENV"] == "development"
 
